@@ -1,0 +1,29 @@
+[configuration]
+
+entry_symbol = "vosk_library_init"
+compatibility_minimum = "4.1"
+reloadable = false
+
+[libraries]
+; Relative paths ensure that our GDExtension can be placed anywhere in the project directory.
+macos.debug   = "macos/libgodot-vosk.macos.template_debug.dylib"
+macos.release = "macos/libgodot-vosk.macos.template_release.dylib"
+
+linux.x86_64.debug   = "linux/libgodot-vosk.linux.template_debug.x86_64.so"
+linux.x86_64.release = "linux/libgodot-vosk.linux.template_release.x86_64.so"
+
+android.arm64.debug   = "android/libgodot-vosk.android.template_debug.arm64.so"
+android.arm64.release = "android/libgodot-vosk.android.template_release.arm64.so"
+android.arm32.debug   = "android/libgodot-vosk.android.template_debug.arm32.so"
+android.arm32.release = "android/libgodot-vosk.android.template_release.arm32.so"
+
+windows.x86_64.debug   = "windows/godot-vosk.windows.template_debug.x86_64.dll"
+windows.x86_64.release = "windows/godot-vosk.windows.template_release.x86_64.dll"
+
+[dependencies]
+; Bundle the Vosk shared library alongside our extension so Godot (and the
+; Android export) packages it with the game automatically.
+linux.x86_64 = {"linux/libvosk.so": ""}
+macos        = {"macos/libvosk.dylib": ""}
+android.arm64 = {"android/arm64-v8a/libvosk.so": "libvosk.so"}
+android.arm32 = {"android/armeabi-v7a/libvosk.so": "libvosk.so"}

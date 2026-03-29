@@ -1,6 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh0oj81pufivs"]
+[gd_scene format=3 uid="uid://dh0oj81pufivs"]
 
-[ext_resource type="Script" path="res://example.gd" id="1_jdh55"]
+[ext_resource type="Script" uid="uid://ci0yngvka5prc" path="res://example.gd" id="1_jdh55"]
 
-[node name="Node" type="Node"]
+[node name="Demo" type="Control" unique_id=717511001]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_jdh55")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1397828748]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=234954529]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1901400202]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Vosk Speech Recognition"
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1903801338]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+text = "Initializing…"
+
+[node name="HSepTop" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=1651043538]
+layout_mode = 2
+
+[node name="PartialLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1109588740]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+
+[node name="HSepBottom" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=1737497998]
+layout_mode = 2
+
+[node name="ResultsHeader" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1847327784]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+text = "Recognized phrases:"
+
+[node name="ResultsLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=1029031679]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+scroll_following = true

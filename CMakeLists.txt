@@ -5,7 +5,8 @@ cmake_minimum_required(VERSION 3.17)
 if(CMAKE_C_COMPILER)
 endif()
 
-set(LIBNAME "EXTENSION-NAME") # "The name of the library"
+set(LIBNAME "godot-vosk") # "The name of the library"
+set(VOSK_DIR "${CMAKE_CURRENT_LIST_DIR}/thirdparty/vosk")
 set(GODOT_PROJECT_DIR "project" CACHE STRING "The directory of a Godot project folder")
 
 # Make sure all the dependencies are satisfied
@@ -49,8 +50,8 @@ target_sources(${LIBNAME}
     PRIVATE
     src/register_types.cpp
     src/register_types.h
-    src/example_class.cpp
-    src/example_class.h
+    src/vosk_recognizer.cpp
+    src/vosk_recognizer.h
 )
 
 # Fetch a list of the xml files to use for documentation and add to our target
@@ -64,6 +65,24 @@ if(DOC_XML)
 endif()
 
 target_link_libraries(${LIBNAME} PRIVATE godot-cpp)
+
+# Vosk headers always; libvosk loaded at runtime (dlopen) on Linux/macOS.
+# Android requires a build-time NEEDED entry so bionic packages it in the APK.
+target_include_directories(${LIBNAME} PRIVATE "${VOSK_DIR}/include")
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(${LIBNAME} PRIVATE dl)
+    set_target_properties(${LIBNAME} PROPERTIES BUILD_RPATH "$ORIGIN")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set_target_properties(${LIBNAME} PROPERTIES BUILD_RPATH "@loader_path")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
+    if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")
+        target_link_directories(${LIBNAME} PRIVATE "${VOSK_DIR}/libs/android/arm64-v8a")
+    elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")
+        target_link_directories(${LIBNAME} PRIVATE "${VOSK_DIR}/libs/android/armeabi-v7a")
+    endif()
+    target_link_libraries(${LIBNAME} PRIVATE vosk)
+endif()
 
 # Require at least C++17 for this target
 set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
