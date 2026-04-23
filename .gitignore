@@ -46,6 +46,10 @@ compile_commands.json
 *.idb
 *.exp
 
+!thirdparty/vosk/libs/android/arm64-v8a/libvosk.so
+!thirdparty/vosk/libs/android/armeabi-v7a/libvosk.so
+!thirdparty/vosk/libs/linux/x86_64/libvosk.so
+
 # Other stuff
 *.log
 
