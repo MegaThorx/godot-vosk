@@ -74,7 +74,7 @@ sources = Glob("src/*.cpp")
 
 # Compile vosk_recognizer.cpp with -fexceptions (godot-cpp uses -fno-exceptions).
 vosk_env = env.Clone()
-if env.get("CC", "").startswith("cl") or env.get("platform", "") == "windows":
+if env.get("platform", "") == "windows":
     vosk_env.Append(CXXFLAGS=["/EHsc"])
 else:
     vosk_env.Append(CXXFLAGS=["-fexceptions"])
