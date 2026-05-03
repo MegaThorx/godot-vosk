@@ -258,7 +258,7 @@ void VoskSpeechRecognizer::stop() {
     if (_recognizer) {
         const char *final_json = g_vosk.recognizer_final_result(_recognizer);
         if (final_json) {
-            emit_signal("result", String(final_json));
+            emit_signal("result", String::utf8(final_json));
         }
         g_vosk.recognizer_free(_recognizer);
         _recognizer = nullptr;
@@ -332,13 +332,13 @@ void VoskSpeechRecognizer::_thread_func() {
             // Full utterance — final result for this phrase.
             const char *res = g_vosk.recognizer_result(_recognizer);
             if (res) {
-                emit_signal("result", String(res));
+                emit_signal("result", String::utf8(res));
             }
         } else if (finished == 0) {
             // Still decoding — emit partial.
             const char *partial = g_vosk.recognizer_partial_result(_recognizer);
             if (partial) {
-                emit_signal("partial_result", String(partial));
+                emit_signal("partial_result", String::utf8(partial));
             }
         } else {
             // finished == -1: recognizer error — stop the loop.
